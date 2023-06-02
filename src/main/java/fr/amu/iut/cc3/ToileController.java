@@ -101,7 +101,7 @@ public class ToileController implements Initializable {
             protected boolean computeValue() {
                 try{
                     int note = Integer.parseInt(textField.getText());
-                    if(note > 20){
+                    if(note > 20 || note < 0){
                         errorBox.setVisible(true);
                         throw new NumberFormatException();
                     }else
