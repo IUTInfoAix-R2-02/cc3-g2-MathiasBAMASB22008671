@@ -76,12 +76,10 @@ public class ToileController implements Initializable {
         pointChange = new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number aDouble, Number t1) {
-                for(Circle point : getListePoint()){
+                for(Circle point : getListePoint())
                     if(!point.isVisible()) return;
-                }
                 resetLigne();
                 if(tracerAppuyer) tracerLigne();
-
             }
         };
 
@@ -89,6 +87,7 @@ public class ToileController implements Initializable {
 
     }
 
+    // Creation individuelle d'un point avec ses bindings et ses eventhandlers
     public void creationPoint(TextField textField, int numTF){
         Circle circle = new Circle(5);
         IntegerProperty noteProperty = new SimpleIntegerProperty(0);
@@ -122,7 +121,7 @@ public class ToileController implements Initializable {
             }
             @Override
             protected int computeValue() {
-                return getXRadarChart(noteProperty.doubleValue(), numTF);
+                return getXRadarChart(noteProperty.doubleValue(), numTF+1);
             }
         };
 
@@ -133,7 +132,7 @@ public class ToileController implements Initializable {
             }
             @Override
             protected int computeValue() {
-                return getYRadarChart(noteProperty.doubleValue(), numTF);
+                return getYRadarChart(noteProperty.doubleValue(), numTF+1);
             }
         };
 
@@ -177,9 +176,9 @@ public class ToileController implements Initializable {
     // Recupère la liste des points
     public ArrayList<Circle> getListePoint(){
         ArrayList<Circle> listePoints = new ArrayList<>();
-        for(Node node : toile.getChildren()){
+        for(Node node : toile.getChildren())
             if(node instanceof Circle) listePoints.add((Circle) node);
-        }
+
         return listePoints;
     }
 
