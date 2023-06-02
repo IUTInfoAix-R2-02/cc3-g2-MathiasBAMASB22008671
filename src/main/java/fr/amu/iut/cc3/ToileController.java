@@ -93,6 +93,7 @@ public class ToileController implements Initializable {
         Circle circle = new Circle(5);
         IntegerProperty noteProperty = new SimpleIntegerProperty(0);
 
+        // Verifie si la note entrée est valide si elle ne l'est pas -> box erreur
         BooleanBinding noteValide = new BooleanBinding() {
             {
                 this.bind(textField.textProperty(), noteProperty);
@@ -114,6 +115,7 @@ public class ToileController implements Initializable {
             }
         };
 
+        //Determine le centre X
         IntegerBinding xCenter = new IntegerBinding() {
             {
                 this.bind(noteProperty);
@@ -124,6 +126,7 @@ public class ToileController implements Initializable {
             }
         };
 
+        //Determine le centre Y
         IntegerBinding yCenter = new IntegerBinding() {
             {
                 this.bind(noteProperty);
@@ -153,22 +156,25 @@ public class ToileController implements Initializable {
                 *  (value / noteMaximale));
     }
 
+    // Remet le graphe à 0 en enlevant les points les lignes et en vidant les texfields
     public void resetGraph(){
-        for(Node node : noteGridPane.getChildren()){
+        for(Node node : noteGridPane.getChildren()){ // Reset les texfields
             if(node instanceof TextField)
                 ((TextField) node).setText("");
         }
         toile.getChildren().clear();
         errorBox.setVisible(false);
         tracerAppuyer = false;
-        createAllCircle();
+        createAllCircle(); // Recrée les points
     }
-    
+
+    // Créer les points avec leur bindings et Eventhandlers
     public void createAllCircle(){
         for(int i = 0; i < listeCompTF.size(); ++i)
             creationPoint(listeCompTF.get(i), i);
     }
 
+    // Recupère la liste des points
     public ArrayList<Circle> getListePoint(){
         ArrayList<Circle> listePoints = new ArrayList<>();
         for(Node node : toile.getChildren()){
@@ -177,11 +183,13 @@ public class ToileController implements Initializable {
         return listePoints;
     }
 
+    // Supprime tout les éléments et recrée les points pour supprimer les lignes
     public void resetLigne(){
         toile.getChildren().clear();
         createAllCircle();
     }
 
+    // Trace les lignes entre chaque point du graphique
     public void tracerLigne(){
         ArrayList<Circle> listePoint = getListePoint();
         if(!tracerAppuyer) tracerAppuyer = true;
