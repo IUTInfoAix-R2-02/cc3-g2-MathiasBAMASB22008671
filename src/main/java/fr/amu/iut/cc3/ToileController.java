@@ -1,23 +1,16 @@
 package fr.amu.iut.cc3;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -26,7 +19,6 @@ import javafx.scene.shape.Line;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ToileController implements Initializable {
@@ -63,6 +55,9 @@ public class ToileController implements Initializable {
 
     @FXML
     private VBox errorBox;
+
+    @FXML
+    private Label traceErreur;
 
     private ChangeListener<Number> pointChange;
 
@@ -163,6 +158,7 @@ public class ToileController implements Initializable {
         }
         toile.getChildren().clear();
         errorBox.setVisible(false);
+        traceErreur.setVisible(false);
         tracerAppuyer = false;
         createAllCircle(); // Recrée les points
     }
@@ -191,7 +187,14 @@ public class ToileController implements Initializable {
     // Trace les lignes entre chaque point du graphique
     public void tracerLigne(){
         ArrayList<Circle> listePoint = getListePoint();
+        for(Circle point : listePoint){ //Si un point n'est pas visible -> message d'erreur
+            if(!point.isVisible()){
+                traceErreur.setVisible(true);
+                return;
+            }
+        }
         if(!tracerAppuyer) tracerAppuyer = true;
+        traceErreur.setVisible(false);
         for(int i = 0; i < listePoint.size(); i++){
             Line line = new Line();
             line.setStartX(listePoint.get(i).getCenterX());

@@ -64,14 +64,17 @@
                <RowConstraints />
             </rowConstraints>
             </GridPane>
-        <VBox fx:id="errorBox" visible="false">
-            <Label text="Erreur de saisie" style="-fx-text-fill: red"/>
-            <Label text="La valeur doit être entre 0 et 20" style="-fx-text-fill: red"/>
-        </VBox>
-
+            <VBox fx:id="errorBox" visible="false">
+                <Label text="Erreur de saisie" style="-fx-text-fill: red"/>
+                <Label text="La valeur doit être entre 0 et 20" style="-fx-text-fill: red"/>
+            </VBox>
+            <Label fx:id="traceErreur" text="Les 6 points doivent être placés" visible="false" style="-fx-text-fill: red"/>
             <HBox alignment="BOTTOM_RIGHT" spacing="20">
                 <Button text="Tracer" minHeight="30" onAction="#tracerLigne"/>
                 <Button prefWidth="71.0" minHeight="30" text="Vider" onAction="#resetGraph"/>
+                <padding>
+                    <Insets bottom="20"/>
+                </padding>
             </HBox>
         </VBox>
     </VBox>
