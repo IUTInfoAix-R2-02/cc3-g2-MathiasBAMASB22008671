@@ -35,6 +35,7 @@ public class ToileController implements Initializable {
     private static int angleEnDegre = 60;
     private static int angleDepart = 90;
     private static int noteMaximale = 20;
+    private boolean tracerAppuyer = false;
 
     @FXML
     private Pane toile;
@@ -65,10 +66,12 @@ public class ToileController implements Initializable {
 
     private ChangeListener<Number> pointChange;
 
+    private ArrayList<TextField> listeCompTF;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<TextField> listeCompTF = new ArrayList<>(Arrays.asList(comp1, comp2, comp3, comp4, comp5, comp6));
+        listeCompTF = new ArrayList<>(Arrays.asList(comp1, comp2, comp3, comp4, comp5, comp6));
 
         pointChange = new ChangeListener<Number>() {
             @Override
@@ -76,14 +79,14 @@ public class ToileController implements Initializable {
                 for(Circle point : getListePoint()){
                     if(!point.isVisible()) return;
                 }
-                //resetLigne();
-                tracerLigne();
+                resetLigne();
+                if(tracerAppuyer) tracerLigne();
+
             }
         };
 
-        for(int i = 0; i < listeCompTF.size(); ++i){
-            creationPoint(listeCompTF.get(i), i);
-        }
+        createAllCircle();
+
     }
 
     public void creationPoint(TextField textField, int numTF){
@@ -152,12 +155,18 @@ public class ToileController implements Initializable {
 
     public void resetGraph(){
         for(Node node : noteGridPane.getChildren()){
-            if(node instanceof TextField){
+            if(node instanceof TextField)
                 ((TextField) node).setText("");
-            }
         }
-        resetLigne();
+        toile.getChildren().clear();
         errorBox.setVisible(false);
+        tracerAppuyer = false;
+        createAllCircle();
+    }
+    
+    public void createAllCircle(){
+        for(int i = 0; i < listeCompTF.size(); ++i)
+            creationPoint(listeCompTF.get(i), i);
     }
 
     public ArrayList<Circle> getListePoint(){
@@ -169,11 +178,13 @@ public class ToileController implements Initializable {
     }
 
     public void resetLigne(){
-        toile.getChildren();
+        toile.getChildren().clear();
+        createAllCircle();
     }
 
     public void tracerLigne(){
         ArrayList<Circle> listePoint = getListePoint();
+        if(!tracerAppuyer) tracerAppuyer = true;
         for(int i = 0; i < listePoint.size(); i++){
             Line line = new Line();
             line.setStartX(listePoint.get(i).getCenterX());
