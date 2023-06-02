@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<HBox id="scene" prefHeight="450.0" prefWidth="700.0" spacing="20.0" style="-fx-background-color: #b4cdfb" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="scene" prefHeight="450.0" prefWidth="700.0" spacing="20.0" style="-fx-background-color: #b4cdfb" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.amu.iut.cc3.ToileController">
     <padding>
         <Insets top="15" />
     </padding>
@@ -32,25 +32,25 @@
         <Pane fx:id="toile" styleClass="toile" />
     </Pane>
     <VBox>
-        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-            <GridPane vgap="20" hgap="20">
+        <VBox alignment="CENTER" VBox.vgrow="ALWAYS" spacing="30">
+            <GridPane fx:id="noteGridPane" vgap="20" hgap="20">
                 <Label text="Compétence 1 - Réaliser" GridPane.rowIndex="0" />
-                <TextField maxWidth="50" GridPane.columnIndex="1" />
+                <TextField fx:id="comp1" maxWidth="50" GridPane.columnIndex="1"/>
 
                 <Label text="Compétence 2 - Optimiser" GridPane.rowIndex="1" />
-                <TextField maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="comp2" maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                 <Label text="Compétence 3 - Administrer" GridPane.rowIndex="2" />
-                <TextField maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="comp3" maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label text="Compétence 4 - Gérer" GridPane.rowIndex="3" />
-                <TextField maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <TextField fx:id="comp4" maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                 <Label text="Compétence 5 - Conduire" GridPane.rowIndex="4" />
-                <TextField maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextField fx:id="comp5" maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
                 <Label text="Compétence 6 - Collaborer" GridPane.rowIndex="5" />
-                <TextField maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <TextField fx:id="comp6" maxWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <columnConstraints>
                <ColumnConstraints />
                <ColumnConstraints />
@@ -64,14 +64,14 @@
                <RowConstraints />
             </rowConstraints>
             </GridPane>
+        <VBox fx:id="errorBox" visible="false">
+            <Label text="Erreur de saisie" style="-fx-text-fill: red"/>
+            <Label text="La valeur doit être entre 0 et 20" style="-fx-text-fill: red"/>
         </VBox>
-        <VBox alignment="BOTTOM_RIGHT">
-            <padding>
-                <Insets bottom="20" right="20"/>
-            </padding>
+
             <HBox alignment="BOTTOM_RIGHT" spacing="20">
-                <Button text="Tracer" minHeight="30"/>
-                <Button prefWidth="71.0" minHeight="30" text="Vider" />
+                <Button text="Tracer" minHeight="30" onAction="#tracerLigne"/>
+                <Button prefWidth="71.0" minHeight="30" text="Vider" onAction="#resetGraph"/>
             </HBox>
         </VBox>
     </VBox>
